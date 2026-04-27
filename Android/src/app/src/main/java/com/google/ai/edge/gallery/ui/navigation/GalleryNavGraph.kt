@@ -519,7 +519,7 @@ private fun CustomTaskScreen(
           modelManagerViewModel = modelManagerViewModel,
           inProgress = disableAppBarControls,
           modelPreparing = disableAppBarControls,
-          canShowResetSessionButton = false,
+          canShowHistoryButton = false,
           useThemeColor = useThemeColor,
           modifier =
             Modifier.onGloballyPositioned { coordinates -> appBarHeight = coordinates.size.height },

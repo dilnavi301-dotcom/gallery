@@ -19,10 +19,12 @@ package com.google.ai.edge.gallery.ui.llmchat
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
+import androidx.datastore.core.DataStore
 import androidx.lifecycle.viewModelScope
 import com.google.ai.edge.gallery.data.ConfigKeys
 import com.google.ai.edge.gallery.data.Model
 import com.google.ai.edge.gallery.data.Task
+import com.google.ai.edge.gallery.proto.UserData
 import com.google.ai.edge.gallery.runtime.runtimeHelper
 import com.google.ai.edge.gallery.ui.common.chat.ChatMessageAudioClip
 import com.google.ai.edge.gallery.ui.common.chat.ChatMessageError
@@ -46,7 +48,8 @@ import kotlinx.coroutines.launch
 private const val TAG = "AGLlmChatViewModel"
 
 @OptIn(ExperimentalApi::class)
-open class LlmChatViewModelBase() : ChatViewModel() {
+open class LlmChatViewModelBase(userDataDataStore: DataStore<UserData>? = null) :
+  ChatViewModel(userDataDataStore) {
   fun generateResponse(
     model: Model,
     input: String,
@@ -341,8 +344,14 @@ open class LlmChatViewModelBase() : ChatViewModel() {
   }
 }
 
-@HiltViewModel class LlmChatViewModel @Inject constructor() : LlmChatViewModelBase()
+@HiltViewModel
+class LlmChatViewModel @Inject constructor(userDataDataStore: DataStore<UserData>) :
+  LlmChatViewModelBase(userDataDataStore)
 
-@HiltViewModel class LlmAskImageViewModel @Inject constructor() : LlmChatViewModelBase()
+@HiltViewModel
+class LlmAskImageViewModel @Inject constructor(userDataDataStore: DataStore<UserData>) :
+  LlmChatViewModelBase(userDataDataStore)
 
-@HiltViewModel class LlmAskAudioViewModel @Inject constructor() : LlmChatViewModelBase()
+@HiltViewModel
+class LlmAskAudioViewModel @Inject constructor(userDataDataStore: DataStore<UserData>) :
+  LlmChatViewModelBase(userDataDataStore)
